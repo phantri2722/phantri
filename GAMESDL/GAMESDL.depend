@@ -1,0 +1,120 @@
+# depslib dependency file v1.0
+1713946888 source:d:\demosdl\phantri\gamesdl\renderwindow.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"RenderWindow.hpp"
+	"Properties.hpp"
+
+1713946888 d:\demosdl\phantri\gamesdl\renderwindow.hpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+
+1714255750 source:d:\demosdl\phantri\gamesdl\main.cpp
+	"game.h"
+
+1714058465 source:d:\demosdl\phantri\gamesdl\entity.cpp
+	"Entity.hpp"
+	"Properties.hpp"
+	<SDL.h>
+	"Bullet.hpp"
+	<SDL_image.h>
+
+1714058367 d:\demosdl\phantri\gamesdl\entity.hpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"Bullet.hpp"
+
+1711168287 source:d:\demosdl\phantri\gamesdl\move.cpp
+	"Move.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+
+1711168692 d:\demosdl\phantri\gamesdl\move.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+
+1711186295 source:d:\demosdl\phantri\gamesdl\back.cpp
+	"back.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1711186410 d:\demosdl\phantri\gamesdl\back.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1711597419 d:\demosdl\phantri\gamesdl\scrollingbackground.hpp
+	<SDl.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1711597387 source:d:\demosdl\phantri\gamesdl\scrollingbackground.cpp
+	"ScrollingBackground.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1711599327 d:\demosdl\phantri\gamesdl\sprite.hpp
+	<SDl.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1711599316 source:d:\demosdl\phantri\gamesdl\sprite.cpp
+	"Sprite.hpp"
+	<SDl.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1714009236 d:\demosdl\phantri\gamesdl\properties.hpp
+
+1714259186 source:d:\demosdl\phantri\gamesdl\bullet.cpp
+	"bullet.h"
+
+1714058367 d:\demosdl\phantri\gamesdl\bullet.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1714056160 d:\demosdl\phantri\gamesdl\game.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1714259148 source:d:\demosdl\phantri\gamesdl\space_ship.cpp
+	"space_ship.h"
+
+1714259253 d:\demosdl\phantri\gamesdl\space_ship.h
+	<vector>
+	"common.h"
+	"base.h"
+	"bullet.h"
+
+1714259148 d:\demosdl\phantri\gamesdl\common.h
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+
+1714254588 d:\demosdl\phantri\gamesdl\base.h
+	"common.h"
+
+1714217383 source:d:\demosdl\phantri\gamesdl\base.cpp
+	"base.h"
+
+1714259148 d:\demosdl\phantri\gamesdl\game.h
+	"common.h"
+	"base.h"
+	"space_ship.h"
+
+1714255947 source:d:\demosdl\phantri\gamesdl\game.cpp
+	"game.h"
+
+1714259148 d:\demosdl\phantri\gamesdl\bullet.h
+	"base.h"
+	"common.h"
+
