@@ -11,6 +11,9 @@ space_ship::space_ship()
     y_val_ = 0;
 
     status_ = true;
+    bullet_damage_ = 0;
+    bullet_type_ = BLASTER;
+    heart_ = MAIN_HEART;
 }
 
 space_ship::~space_ship(){}

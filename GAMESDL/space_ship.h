@@ -9,6 +9,7 @@
 #define WIDTH_MAIN 70
 #define HEIGHT_MAIN 57
 #define MAIN_SPEED 8
+#define MAIN_HEART 3
 
 class space_ship : public base
 {
@@ -24,12 +25,15 @@ public:
     float get_bullet_damage() {return bullet_damage_;}
     void set_status(const bool& status) {status_ = status;}
     bool get_status() {return status_;}
+    void set_heart(const int& heart) {heart_ = heart;}
+    int get_heart() {return heart_;}
 
     void Control(SDL_Event event, SDL_Renderer* screen, int bullet_level);
     void Move();
     void Show(SDL_Renderer* screen);
     void HandleBullet(SDL_Renderer* screen);
     void RemoveBullet(const int& idx);
+    void decrease_heart() {heart_ --;}
 private:
     int x_val_;
     int y_val_;
@@ -38,6 +42,7 @@ private:
     std::vector<bullet*> bullet_list_;
     int bullet_type_;
     float bullet_damage_;
+    int heart_;
 };
 
 
