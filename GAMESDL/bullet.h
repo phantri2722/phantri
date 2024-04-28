@@ -21,6 +21,7 @@ public:
 
     void loadImgBullet(SDL_Renderer* screen, int bullet_level);
     void HandleMoveSpaceshipBullet();
+    void HandleMoveChickenBullet();
 private:
     int x_val_;
     int y_val_;

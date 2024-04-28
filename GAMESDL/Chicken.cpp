@@ -63,7 +63,7 @@ void Chicken::HandleBullet(SDL_Renderer * screen)
             if(p_bullet->get_is_move())
             {
                 p_bullet->Render(screen);
-                p_bullet->HandleMoveSpaceshipBullet();
+                p_bullet->HandleMoveChickenBullet();
             }
             else
             {

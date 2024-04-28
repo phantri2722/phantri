@@ -37,4 +37,4 @@ private:
     std::vector<Chicken*> p_chicken_list_;
 };
 
-#endif // GAME_H_INCLUDED
+#endif

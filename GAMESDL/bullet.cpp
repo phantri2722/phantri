@@ -37,3 +37,12 @@ void bullet::HandleMoveSpaceshipBullet()
         is_move_ = false;
     }
 }
+
+void bullet::HandleMoveChickenBullet()
+{
+    rect_.y += y_val_;
+    if(rect_.y > SCREEN_HEIGHT)
+    {
+        is_move_ = false;
+    }
+}

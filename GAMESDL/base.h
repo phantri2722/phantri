@@ -20,4 +20,4 @@ protected:
 };
 
 
-#endif // BASE_H_INCLUDED
+#endif

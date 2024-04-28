@@ -35,12 +35,6 @@ void game::init(std::string title)
             else
             {
                 SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-
-                int imgFlags = IMG_INIT_PNG;
-                if( !(IMG_Init( imgFlags) & imgFlags))
-                {
-                    isRunning = false;
-                }
             }
         }
     }
@@ -234,6 +228,7 @@ void game::handle_chicken()
                             {
                                 item_.set_item_type(item_.ramdom_item());
                                 item_.loadImgItem(gRenderer);
+                                item_.set_y_val(SPEED_ITEM);
                                 item_.SetRect((rand()%(SCREEN_WIDTH - 2*BULLET_TYPE_WIDTH) + BULLET_TYPE_WIDTH), -BULLET_TYPE_HEIGHT);
                                 item_.set_come_back(true);
                             }
