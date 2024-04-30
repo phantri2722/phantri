@@ -4,6 +4,7 @@ int main(int argc, char* argv[])
 {
     game game_;
     game_.init("PhanTranQuangTri_23021739");
+    game_.menu("Start");
     while(game_.get_running()==true)
     {
         game_.handle_event();

@@ -46,3 +46,12 @@ void bullet::HandleMoveChickenBullet()
         is_move_ = false;
     }
 }
+
+void bullet::HandleMoveBossBullet(const int& x_border, const int& y_border)
+{
+    rect_.y += y_val_;
+    if(rect_.y > y_border)
+    {
+        is_move_ = false;
+    }
+}

@@ -3,13 +3,16 @@
 
 #include<SDL.h>
 #include<SDL_image.h>
+#include<SDL_mixer.h>
+#include<SDL_ttf.h>
 #include<string>
+#include<vector>
 
 
 const int BACKGROUND_WIDTH = 1200;
 const int BACKGROUND_HEIGH = 3840;
 const int SCREEN_WIDTH = 1200;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_HEIGHT = 760;
 const float SCREEN_SPEED = 0.4;
 
 const int COLOR_KEY_R = 170;
@@ -31,8 +34,11 @@ const int CHICkEN_HEART = 3;
 const int DISTANCE_BETWEEN_CHICKEN = 100;
 const int NUMBER_OF_CHICKEN_PER_ROW = 12;
 
+const int BOSS_HEART = 333;
+
 const int ONE_TURN_GIFT = 14;
 
+const int NUMBER_OF_EXP = 3;
 struct StatusChicken
 {
     int turn_left;

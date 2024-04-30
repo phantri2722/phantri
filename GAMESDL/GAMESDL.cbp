@@ -36,9 +36,13 @@
 		<Unit filename="Chicken.h" />
 		<Unit filename="base.cpp" />
 		<Unit filename="base.h" />
+		<Unit filename="boss.cpp" />
+		<Unit filename="boss.h" />
 		<Unit filename="bullet.cpp" />
 		<Unit filename="bullet.h" />
 		<Unit filename="common.h" />
+		<Unit filename="explosion.cpp" />
+		<Unit filename="explosion.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="item.cpp" />
@@ -46,6 +50,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="space_ship.cpp" />
 		<Unit filename="space_ship.h" />
+		<Unit filename="text.cpp" />
+		<Unit filename="text.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
