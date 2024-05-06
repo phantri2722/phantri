@@ -23,11 +23,11 @@ public:
     void set_come_back(const bool& come_back) {come_back_ = come_back;}
     void set_heart(const float& heart) {heart_=heart;}
 
-    int get_x_val() {return x_val_;}
-    int get_y_val() {return y_val_;}
+    int get_x_val()const {return x_val_;}
+    int get_y_val()const {return y_val_;}
     std::vector<bullet*> get_bullet_list(){return bullet_list_;}
-    bool get_come_back() {return come_back_;}
-    float get_heart() {return heart_;}
+    bool get_come_back()const {return come_back_;}
+    float get_heart()const {return heart_;}
 
     void Move();
     void Show(SDL_Renderer* screen);

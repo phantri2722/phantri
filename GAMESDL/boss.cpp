@@ -34,7 +34,7 @@ void Boss::set_clips()
         clip_[i].x = i * WIDTH_BOSS;
         clip_[i].y = 0;
         clip_[i].w = WIDTH_BOSS;
-        clip_[i].w = HEIGHT_BOSS;
+        clip_[i].h = HEIGHT_BOSS;
     }
 }
 
@@ -78,6 +78,7 @@ void Boss::InitBullet(bullet* p_bullet, SDL_Renderer* screen)
         {
             p_bullet->set_is_move(true);
             p_bullet->SetRect(this->rect_.x + WIDTH_BOSS / 2 - p_bullet->GetRect().w / 2, this->rect_.y + HEIGHT_BOSS);
+            p_bullet->set_y_val(BOSS_BULLET_SPEED);
             bullet_list_.push_back(p_bullet);
         }
     }
@@ -109,7 +110,7 @@ void Boss::Move()
         status_.turn_down = 1;
         status_.turn_up = 0;
     }
-    else if(rect_.x >= SCREEN_WIDTH  -WIDTH_BOSS)
+    else if(rect_.x >= SCREEN_WIDTH  - WIDTH_BOSS)
     {
         status_.turn_left = 1;
         status_.turn_right = 0;

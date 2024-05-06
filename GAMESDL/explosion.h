@@ -15,7 +15,7 @@ public:
     ~Explosion();
 
     void set_frame(const int& frame) {frame_ = frame;}
-    int get_frame () {return frame_;}
+    int get_frame() const {return frame_;}
 
     void set_clip();
     void Show(SDL_Renderer* screen);

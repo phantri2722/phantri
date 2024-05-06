@@ -34,6 +34,11 @@ private:
     TTF_Font* g_font_text;
     TTF_Font* g_font_menu;
     TTF_Font* g_font_end_game;
+    Mix_Chunk* g_sound_bullet[3];
+    Mix_Chunk* g_sound_exp[3];
+    Mix_Chunk* g_sound_chicken_hit[3];
+    Mix_Chunk* g_sound_level_up;
+    Mix_Music* g_music_start;
 
     base background;
     space_ship spaceship;

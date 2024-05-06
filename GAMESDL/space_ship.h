@@ -28,7 +28,7 @@ public:
     void set_heart(const int& heart) {heart_ = heart;}
     int get_heart() {return heart_;}
 
-    void Control(SDL_Event event, SDL_Renderer* screen, int bullet_level);
+    void Control(SDL_Event event, SDL_Renderer* screen, int bullet_level, Mix_Chunk* bullet_sound[4], Mix_Chunk* g_sound_level_up);
     void Move();
     void Show(SDL_Renderer* screen);
     void HandleBullet(SDL_Renderer* screen);

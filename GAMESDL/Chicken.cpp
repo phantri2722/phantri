@@ -3,7 +3,7 @@
 Chicken::Chicken()
 {
     rect_.x = SCREEN_WIDTH;
-    rect_.y = SCREEN_HEIGHT;
+    rect_.y = SCREEN_HEIGHT / 2;
     x_val_ = 0;
     y_val_ = 0;
     status_.turn_up = 0;

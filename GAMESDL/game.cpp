@@ -39,13 +39,30 @@ void game::init(std::string title)
             {
                 SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 
+                //text
                 if(TTF_Init() < 0 )
                 {
                     isRunning = false;
                 }
                 g_font_text = TTF_OpenFont("font//font1.ttf", 24);
-                g_font_menu = TTF_OpenFont("font//font1.ttf", 50);
+                g_font_menu = TTF_OpenFont("font//font1.ttf", 30);
                 g_font_end_game = TTF_OpenFont("font//font1.ttf", 100);
+
+                //sound
+                if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+                {
+                    isRunning = false;
+                }
+                g_sound_bullet[0] = Mix_LoadWAV("sound//blaster.wav");
+                g_sound_bullet[1] = Mix_LoadWAV("sound//neutron.wav");
+                g_sound_bullet[2] = Mix_LoadWAV("sound//boron.wav");
+                g_sound_exp[0] = Mix_LoadWAV("sound//exp.wav");
+                g_sound_exp[1] = Mix_LoadWAV("sound//exp_uco.wav");
+                g_sound_chicken_hit[0] = Mix_LoadWAV("sound//ChickenHit.wav");
+                g_sound_chicken_hit[1] = Mix_LoadWAV("sound//ChickenHit2.wav");
+                g_sound_chicken_hit[2] = Mix_LoadWAV("sound//ChickenHit3.wav");
+                g_sound_level_up = Mix_LoadWAV("sound//level_up.wav");
+                g_music_start = Mix_LoadMUS("sound//start.mp3");
             }
         }
     }
@@ -74,7 +91,7 @@ void game::init(std::string title)
         {
             p_chicken->loadImg("image//chicken_red.png", gRenderer);
             p_chicken->set_clips();
-            if(t&NUMBER_OF_CHICKEN_PER_ROW == 0)
+            if(t%NUMBER_OF_CHICKEN_PER_ROW == 0)
             {
                 y_row -= DISTANCE_BETWEEN_CHICKEN;
                 t=0;
@@ -106,6 +123,8 @@ void game::init(std::string title)
     //support
     support.loadImg("image//support.png", gRenderer);
     support.SetRect(-20, 10);
+
+    //texts
     kill_text.SetColor(Text::WHITE);
     heart_text.SetColor(Text::WHITE);
     lighting_text.SetColor(Text::WHITE);
@@ -123,7 +142,7 @@ void game::handle_event()
         {
             isRunning = false;
         }
-        spaceship.Control(gEvent, gRenderer, bullet_level);
+        spaceship.Control(gEvent, gRenderer, bullet_level, g_sound_bullet, g_sound_level_up);
     }
 }
 
@@ -167,6 +186,7 @@ void game::handle_game()
         {
             bullet_level ++;
         }
+        Mix_PlayChannel(-1, g_sound_level_up, 0);
         if(item_.get_item_type() < LEVEL_UP)
         {
             spaceship.set_bullet_type(item_.get_item_type());
@@ -180,11 +200,12 @@ void game::handle_game()
     {
         exp.Show(gRenderer);
     }
-    if(exp.get_frame() < NUMBER_OF_FRAME * 2)
+    if(exp_boss.get_frame() < NUMBER_OF_FRAME * 2)
     {
         exp_boss.Show(gRenderer);
         if(exp_boss.get_frame() >= NUMBER_OF_FRAME * 2 && count_num_exp < NUMBER_OF_EXP)
         {
+            Mix_PlayChannel(-1, g_sound_exp[0], 0);
             exp_boss.set_frame(0);
             count_num_exp ++;
         }
@@ -196,20 +217,20 @@ void game::handle_game()
         if(time_end_game < 300)
         {
             time_end_game++;
-            end_game.SetText("Game Over!");
+            end_game.SetText("GAME OVER !");
             end_game.SetRect(310, SCREEN_HEIGHT / 5);
             end_game.loadText_showText(g_font_end_game, gRenderer);
         }
         else
         {
-            menu("Play Again");
+            menu("PLAY AGAIN");
             reset_game();
         }
     }
     else if(spaceship.get_status() == false)
     {
-        hint.SetText("Press 'EnTER' to restart!");
-        hint.SetRect(280, SCREEN_HEIGHT / 4);
+        hint.SetText("PRESS ENTER TO REVIVE !");
+        hint.SetRect(390, SCREEN_HEIGHT / 2);
         hint.loadText_showText(g_font_menu, gRenderer);
     }
 
@@ -219,13 +240,13 @@ void game::handle_game()
         if(time_end_game < 300)
         {
             time_end_game ++;
-            end_game.SetText("Win Game!");
+            end_game.SetText("WIN GAME !");
             end_game.SetRect(310, SCREEN_HEIGHT / 5);
             end_game.loadText_showText(g_font_end_game, gRenderer);
         }
         else
         {
-            menu("Play Again");
+            menu("PLAY AGAIN");
             reset_game();
         }
     }
@@ -255,7 +276,7 @@ bool game::crash_check(const SDL_Rect& object1, const SDL_Rect& object2)
     int left_b = object2.x;
     int right_b = object2.x + object2.w;
     int top_b = object2.y;
-    int bottom_b = object2.y + object2.h;
+     int bottom_b = object2.y + object2.h;
 
     if(left_a > right_b || right_a < left_b || top_a > bottom_b || bottom_a < top_b)
     {
@@ -273,6 +294,7 @@ void game::clean()
     SDL_Quit();
     IMG_Quit();
     TTF_Quit();
+    Mix_Quit();
 }
 
 void game::handle_chicken()
@@ -308,6 +330,8 @@ void game::handle_chicken()
             bool Col2 = crash_check(spaceship.GetRect(), p_chicken->GetRectFrame());
             if(Col1||Col2)
             {
+                Mix_PlayChannel(-1, g_sound_exp[0], 0);
+
                 int x_pos = (spaceship.GetRect().x + WIDTH_MAIN / 2) - WIDTH_FRAME_EXP / 2;
                 int y_pos = (spaceship.GetRect().y + HEIGHT_MAIN / 2) - HEIGHT_MAIN / 2;
                 exp.SetRect(x_pos, y_pos);
@@ -332,12 +356,14 @@ void game::handle_chicken()
                     if(Col3)
                     {
                         p_chicken->Decresae((spaceship.get_bullet_damage()) + bullet_level * BULLET_DAMAGE_LEVEL_UP);
+                        Mix_PlayChannel(-1, g_sound_chicken_hit[rand()%2], 0);
                         spaceship.RemoveBullet(sb);
 
                         if(p_chicken->get_heart() <= 0)
                         {
                             p_chicken->set_heart(CHICkEN_HEART);
                             kill++;
+                            Mix_PlayChannel(-1, g_sound_chicken_hit[2], 0);
 
                             p_chicken->SetRect(p_chicken->GetRect().x, -3 * SCREEN_HEIGHT);
                             if(kill > NUMBER_OF_CHICKEN)
@@ -365,7 +391,7 @@ void game::handle_boss()
 {
     if(kill>=NUMBER_OF_CHICKEN * 2 && boss.get_heart() >= 0)
     {
-        boss.show_heart_boss(gRenderer, 420, 420, boss.get_heart(), 6);
+        boss.show_heart_boss(gRenderer, 420, 20, boss.get_heart(), 6);
 
         boss.Move();
         boss.Show(gRenderer);
@@ -382,9 +408,11 @@ void game::handle_boss()
             }
         }
 
-        bool Col2 = crash_check(spaceship.GetRect(), boss.GetRect());
+        bool Col2 = crash_check(spaceship.GetRect(), boss.GetRectFrame());
         if(Col1 || Col2)
         {
+            Mix_PlayChannel(-1, g_sound_exp[0],  0);
+
             int x_pos = (spaceship.GetRect().x + WIDTH_MAIN / 2) - WIDTH_FRAME_EXP / 2;
             int y_pos = (spaceship.GetRect().y + HEIGHT_MAIN / 2) - HEIGHT_FRAME_EXP / 2;
             exp.SetRect(x_pos, y_pos);
@@ -409,6 +437,7 @@ void game::handle_boss()
                 if(Col3)
                 {
                     boss.Decrease((spaceship.get_bullet_damage()) + bullet_level * BULLET_DAMAGE_LEVEL_UP);
+                    Mix_PlayChannel(-1, g_sound_chicken_hit[rand()%2], 0);
                     spaceship.RemoveBullet(sb);
 
                     if(boss.get_heart() < 0)
@@ -420,6 +449,7 @@ void game::handle_boss()
                         exp_boss.SetRect(x_pos, y_pos);
                         exp_boss.set_frame(0);
                         boss.SetRect(SCREEN_WIDTH/2, -SCREEN_HEIGHT);
+                        Mix_PlayChannel(-1, g_sound_exp[0], 0);
                     }
                 }
             }
@@ -459,24 +489,24 @@ void game::menu(const std::string& element)
     text_menu[0].SetColor(Text::BLACK);
     text_menu[0].loadText_showText(g_font_menu, gRenderer);
     pos_arr[0].x = SCREEN_WIDTH / 2 - text_menu[0].GetRect().w / 2;
-    pos_arr[0].y = SCREEN_HEIGHT - 300;
+    pos_arr[0].y = SCREEN_HEIGHT - 200;
     text_menu[0].SetRect(pos_arr[0].x, pos_arr[0].y);
 
-    text_menu[1].SetText("Information");
+    text_menu[1].SetText("INFORMATION");
     text_menu[1].SetColor(Text::BLACK);
     text_menu[1].loadText_showText(g_font_menu, gRenderer);
     pos_arr[1].x = SCREEN_WIDTH / 2 - text_menu[1].GetRect().w / 2;
-    pos_arr[1].y = SCREEN_HEIGHT - 200;
+    pos_arr[1].y = SCREEN_HEIGHT - 150;
     text_menu[1].SetRect(pos_arr[1].x, pos_arr[1].y);
 
-    text_menu[2].SetText("Quit!");
+    text_menu[2].SetText("QUIT !");
     text_menu[2].SetColor(Text::BLACK);
     text_menu[2].loadText_showText(g_font_menu, gRenderer);
     pos_arr[2].x = SCREEN_WIDTH / 2 - text_menu[2].GetRect().w / 2;
     pos_arr[2].y = SCREEN_HEIGHT - 100;
     text_menu[2].SetRect(pos_arr[2].x, pos_arr[2].y);
 
-    text_menu[3].SetText("Back!");
+    text_menu[3].SetText("BACK !");
     text_menu[3].SetColor(Text::BLACK);
     text_menu[3].loadText_showText(g_font_menu, gRenderer);
     pos_arr[3].x = 10;
@@ -485,6 +515,7 @@ void game::menu(const std::string& element)
 
     int xm = 0;
     int ym = 0;
+    Mix_PlayMusic(g_music_start, -1);
     bool quit = true;
     while(quit)
     {
@@ -503,7 +534,7 @@ void game::menu(const std::string& element)
         }
         while(SDL_PollEvent(&gEvent)!=0)
         {
-            spaceship.Control(gEvent, gRenderer, bullet_level);
+            spaceship.Control(gEvent, gRenderer, bullet_level, g_sound_bullet, g_sound_level_up);
             if(gEvent.type == SDL_QUIT)
             {
                 isRunning = false;
@@ -540,6 +571,7 @@ void game::menu(const std::string& element)
                             if(i == 0) { isRunning = true; quit = false;}
                             else if(i == 1) { menu_number = 1;}
                             else if( i == 2) { isRunning = false; quit = false;}
+                            Mix_PlayChannel(-1, g_sound_level_up, 0);
                         }
                     }
                     else if(menu_number == 1)
@@ -547,6 +579,7 @@ void game::menu(const std::string& element)
                         if(check_mouse_item(xm, ym, text_menu[3].GetRect()))
                         {
                             menu_number = 0;
+                            Mix_PlayChannel(-1, g_sound_level_up, 0);
                         }
                     }
                 }
@@ -554,6 +587,7 @@ void game::menu(const std::string& element)
         }
         SDL_RenderPresent(gRenderer);
     }
+    Mix_PauseMusic();
 }
 
 void game::reset_game()
@@ -563,7 +597,7 @@ void game::reset_game()
     count_num_exp = 0;
     scrolling = -(BACKGROUND_HEIGH -SCREEN_HEIGHT);
     time_end_game = 0;
-    spaceship.set_bullet_damage(BLASTER);
+    spaceship.set_bullet_type(BLASTER);
     spaceship.SetRect(SCREEN_WIDTH / 2, SCREEN_HEIGHT - HEIGHT_MAIN);
     spaceship.set_status(true);
     spaceship.set_heart(CHICkEN_HEART);
@@ -588,7 +622,7 @@ void game::reset_game()
             t=0;
         }
         p_chicken->set_come_back(true);
-        p_chicken->SetRect(10 + t&DISTANCE_BETWEEN_CHICKEN, y_row);
+        p_chicken->SetRect(10 + t*DISTANCE_BETWEEN_CHICKEN, y_row);
         p_chicken->set_heart(CHICkEN_HEART);
         p_chicken->set_status_right();
         t++;

@@ -11,7 +11,7 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1714415576 source:d:\demosdl\phantri\gamesdl\main.cpp
+1714727546 source:d:\demosdl\phantri\gamesdl\main.cpp
 	"game.h"
 
 1714058465 source:d:\demosdl\phantri\gamesdl\entity.cpp
@@ -86,16 +86,16 @@
 	<SDL_image.h>
 	<bits/stdc++.h>
 
-1714287759 source:d:\demosdl\phantri\gamesdl\space_ship.cpp
+1714467278 source:d:\demosdl\phantri\gamesdl\space_ship.cpp
 	"space_ship.h"
 
-1714287759 d:\demosdl\phantri\gamesdl\space_ship.h
+1714467129 d:\demosdl\phantri\gamesdl\space_ship.h
 	<vector>
 	"common.h"
 	"base.h"
 	"bullet.h"
 
-1714411101 d:\demosdl\phantri\gamesdl\common.h
+1714750432 d:\demosdl\phantri\gamesdl\common.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -109,7 +109,7 @@
 1714217383 source:d:\demosdl\phantri\gamesdl\base.cpp
 	"base.h"
 
-1714405892 d:\demosdl\phantri\gamesdl\game.h
+1714727546 d:\demosdl\phantri\gamesdl\game.h
 	"common.h"
 	"base.h"
 	"space_ship.h"
@@ -119,7 +119,7 @@
 	"explosion.h"
 	"text.h"
 
-1714418690 source:d:\demosdl\phantri\gamesdl\game.cpp
+1714918032 source:d:\demosdl\phantri\gamesdl\game.cpp
 	"game.h"
 
 1714414906 d:\demosdl\phantri\gamesdl\bullet.h
@@ -135,13 +135,13 @@
 
 1714287759 d:\demosdl\phantri\gamesdl\creep.h
 
-1714288075 d:\demosdl\phantri\gamesdl\chicken.h
+1714840099 d:\demosdl\phantri\gamesdl\chicken.h
 	<vector>
 	"common.h"
 	"base.h"
 	"bullet.h"
 
-1714335233 source:d:\demosdl\phantri\gamesdl\chicken.cpp
+1714807420 source:d:\demosdl\phantri\gamesdl\chicken.cpp
 	"Chicken.h"
 
 1714382382 d:\demosdl\phantri\gamesdl\boss.h
@@ -150,10 +150,10 @@
 	"base.h"
 	"bullet.h"
 
-1714414906 source:d:\demosdl\phantri\gamesdl\boss.cpp
+1714754945 source:d:\demosdl\phantri\gamesdl\boss.cpp
 	"boss.h"
 
-1714399506 d:\demosdl\phantri\gamesdl\explosion.h
+1714470989 d:\demosdl\phantri\gamesdl\explosion.h
 	"base.h"
 	"common.h"
 
