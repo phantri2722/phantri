@@ -56,6 +56,7 @@ void game::init(std::string title)
                 g_sound_bullet[0] = Mix_LoadWAV("sound//blaster.wav");
                 g_sound_bullet[1] = Mix_LoadWAV("sound//neutron.wav");
                 g_sound_bullet[2] = Mix_LoadWAV("sound//boron.wav");
+                g_sound_bullet[3] = Mix_LoadWAV("sound//love.wav");
                 g_sound_exp[0] = Mix_LoadWAV("sound//exp.wav");
                 g_sound_exp[1] = Mix_LoadWAV("sound//exp_uco.wav");
                 g_sound_chicken_hit[0] = Mix_LoadWAV("sound//ChickenHit.wav");
@@ -482,6 +483,7 @@ void game::menu(const std::string& element)
 {
     base menu;
     base menu2;
+    base plot1;
     if(!menu.loadImg("image//menu.png", gRenderer))
     {
         isRunning = false;
