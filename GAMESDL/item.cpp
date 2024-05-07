@@ -31,10 +31,10 @@ SDL_Rect item::GetRectFrame()
     return rect;
 }
 
-int item::ramdom_item()const
+int item::random_item()const
 {
-    int rand_item_type = rand() % 5;
-    rand_item_type = rand_item_type < 3 ? rand_item_type : 3;
+    int rand_item_type = rand()%7;
+    rand_item_type = rand_item_type < 5 ? rand_item_type : 5;
     return rand_item_type;
 }
 
@@ -51,6 +51,14 @@ void item::loadImgItem(SDL_Renderer* screen)
     else if(item_type_ == BORON)
     {
         loadImg("image//gift3.png", screen);
+    }
+    else if(item_type_ == LOVE)
+    {
+        loadImg("image//gift4.png", screen);
+    }
+    else if(item_type_ == TROLL)
+    {
+        loadImg("image//gift5.png", screen);
     }
     else if(item_type_ == LEVEL_UP)
     {
@@ -74,7 +82,7 @@ void item::Move(const int& x_border, const int& y_border)
 
 void item::Show(SDL_Renderer* screen)
 {
-    if(item_type_ == 3)
+    if(item_type_ == LEVEL_UP)
     {
         if(come_back_ == true)
         {
@@ -87,7 +95,7 @@ void item::Show(SDL_Renderer* screen)
             SDL_RenderCopy(screen, object_, &clip_[frame_/3], &renderQuad);
         }
     }
-    else if(item_type_ < 3)
+    else if(item_type_ < LEVEL_UP )
     {
         if(come_back_ == true)
         {

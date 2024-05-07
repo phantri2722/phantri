@@ -83,6 +83,13 @@ void space_ship::Control(SDL_Event event, SDL_Renderer* screen, int bullet_level
                     p_bullet->set_y_val(-BORON_SPEED);
                     bullet_damage_ = 1.5;
                 }
+                else if(bullet_type_ == LOVE)
+                {
+                    Mix_PlayChannel(-1, bullet_sound[1], 0);
+                    p_bullet->set_y_val(-LOVE_BULLET_SPEED);
+                    bullet_damage_ = LOVE_BULLET_DAMAGE;
+                }
+
                 p_bullet->loadImgBullet(screen, bullet_level);
                 p_bullet->SetRect(this->rect_.x + this->rect_.w /2 - p_bullet->GetRect().w / 2, this->rect_.y - p_bullet->GetRect().h);
                 p_bullet->set_is_move(true);

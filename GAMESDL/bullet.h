@@ -12,12 +12,12 @@ public:
 
     void set_x_val(const int& xVal) {x_val_ = xVal;}
     void set_y_val(const int& yVal) {y_val_ = yVal;}
-    int get_x_val() {return x_val_;}
-    int get_y_val() {return y_val_;}
+    int get_x_val()const {return x_val_;}
+    int get_y_val()const {return y_val_;}
     void set_is_move(const bool& isMove) {is_move_ = isMove;}
-    bool get_is_move() {return is_move_;}
+    bool get_is_move()const {return is_move_;}
     void set_bullet_type(const int& bulletType) {bullet_type_ = bulletType;}
-    int get_bullet_type() {return bullet_type_;}
+    int get_bullet_type()const {return bullet_type_;}
 
     void loadImgBullet(SDL_Renderer* screen, int bullet_level);
     void HandleMoveSpaceshipBullet();

@@ -21,14 +21,14 @@ public:
     void set_item_type(const int& item_type) {item_type_ = item_type;}
     void set_come_back(const bool& come_back) {come_back_ = come_back;}
 
-    int get_x_val() {return x_val_;}
-    int get_y_val() {return y_val_;}
-    int get_item_type() {return item_type_;}
-    bool get_come_back() {return come_back_;}
+    int get_x_val()const {return x_val_;}
+    int get_y_val()const {return y_val_;}
+    int get_item_type()const {return item_type_;}
+    bool get_come_back()const {return come_back_;}
 
     void set_clip();
     SDL_Rect GetRectFrame();
-    int ramdom_item()const;
+    int random_item()const;
 
     void loadImgItem(SDL_Renderer* screen);
     void Move(const int& x_border, const int& y_border);

@@ -182,16 +182,28 @@ void game::handle_game()
     if(Col)
     {
         item_.SetRect(-BULLET_TYPE_WIDTH, -BULLET_TYPE_HEIGHT);
-        if(bullet_level < 3 && ((item_.get_item_type()) == spaceship.get_bullet_type() || item_.get_item_type() == LEVEL_UP))
+        if(bullet_level < 3 && ((item_.get_item_type() == spaceship.get_bullet_type()) || item_.get_item_type() == LEVEL_UP))
         {
             bullet_level ++;
         }
         Mix_PlayChannel(-1, g_sound_level_up, 0);
-        if(item_.get_item_type() < LEVEL_UP)
+        if(item_.get_item_type() < TROLL)
         {
             spaceship.set_bullet_type(item_.get_item_type());
         }
+        if(item_.get_item_type() == 4)
+        {
+            Mix_PlayChannel(-1, g_sound_exp[0], 0);
 
+            int x_pos = (spaceship.GetRect().x + WIDTH_MAIN / 2) - WIDTH_FRAME_EXP / 2;
+            int y_pos = (spaceship.GetRect().y + HEIGHT_MAIN / 2) - HEIGHT_MAIN / 2;
+            exp.SetRect(x_pos, y_pos);
+            exp.set_frame(0);
+
+            spaceship.SetRect(SCREEN_WIDTH*2, SCREEN_HEIGHT*2);
+            spaceship.set_status(false);
+            spaceship.set_heart(0);
+        }
         item_.set_come_back(false);
     }
 
@@ -373,7 +385,7 @@ void game::handle_chicken()
 
                             if(kill% ONE_TURN_GIFT == 0)
                             {
-                                item_.set_item_type(item_.ramdom_item());
+                                item_.set_item_type(item_.random_item());
                                 item_.loadImgItem(gRenderer);
                                 item_.set_y_val(SPEED_ITEM);
                                 item_.SetRect((rand()%(SCREEN_WIDTH - 2*BULLET_TYPE_WIDTH) + BULLET_TYPE_WIDTH), -BULLET_TYPE_HEIGHT);

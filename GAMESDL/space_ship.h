@@ -20,7 +20,7 @@ public:
     void set_bullet_list(std::vector<bullet*> bullet_list) {bullet_list_ = bullet_list;}
     std::vector<bullet*> get_bullet_list() {return bullet_list_;}
     void set_bullet_type(const int& bullet_type) {bullet_type_ = bullet_type;}
-    int get_bullet_type() {return bullet_type_;}
+    int get_bullet_type()const {return bullet_type_;}
     void set_bullet_damage(const float& bullet_damage) {bullet_damage_ = bullet_damage;}
     float get_bullet_damage() {return bullet_damage_;}
     void set_status(const bool& status) {status_ = status;}

@@ -23,11 +23,16 @@ const int RENDER_DRAW_COLOR = 255;
 const int BLASTER = 0;
 const int NEUTRON = 1;
 const int BORON = 2;
-const int LEVEL_UP = 3;
+const int LOVE = 3;
+const int TROLL = 4;
+const int LEVEL_UP = 5;
+
 const int BLASTER_SPEED = 12;
 const int NEUTRON_SPEED = 18;
 const int BORON_SPEED = 30;
 const int BULLET_DAMAGE_LEVEL_UP = 0.5;
+const int LOVE_BULLET_DAMAGE = 3;
+const int LOVE_BULLET_SPEED = 30;
 
 const int NUMBER_OF_CHICKEN = 36;
 const int CHICkEN_HEART = 3;

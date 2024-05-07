@@ -12,20 +12,24 @@ bullet::~bullet() {}
 
 void bullet::loadImgBullet(SDL_Renderer* screen, int bullet_level)
 {
-    if(bullet_type_ == BLASTER)
-    {
+    if(bullet_type_ == BLASTER){
         std::string blaster_str = "image//blaster" + std::to_string(bullet_level) + ".png";
         loadImg(blaster_str, screen);
     }
-    else if(bullet_type_ = NEUTRON)
-    {
-        std::string neutron_str = "image//neutron" + std::to_string(bullet_level) + ".png";
-        loadImg(neutron_str, screen);
-    }
-    else if(bullet_type_ == BORON)
+    if(bullet_type_ == BORON)
     {
         std::string boron_str = "image//boron" + std::to_string(bullet_level) + ".png";
         loadImg(boron_str, screen);
+    }
+    if(bullet_type_ == LOVE)
+    {
+        std::string love_str = "image//love" + std::to_string(bullet_level) + ".png";
+        loadImg(love_str, screen);
+    }
+    if(bullet_type_ == NEUTRON)
+    {
+        std::string neutron_str = "image//neutron" + std::to_string(bullet_level) + ".png";
+        loadImg(neutron_str, screen);
     }
 }
 
