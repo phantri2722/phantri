@@ -9,6 +9,7 @@
 #include"boss.h"
 #include"explosion.h"
 #include"text.h"
+#include"shield.h"
 class game
 {
 public:
@@ -20,10 +21,12 @@ public:
     void handle_chicken();
     void handle_boss();
     bool get_running() {return isRunning;}
+    bool get_pause_game() {return isPause;}
     bool crash_check(const SDL_Rect& object1, const SDL_Rect& object2);
     bool check_mouse_item(const int& x, const int& y, const SDL_Rect& rect);
     void menu(const std::string& element);
     void reset_game();
+    void handle_pause_game();
     void clean();
 
 private:
@@ -51,7 +54,11 @@ private:
     Text lighting_text;
     Text hint;
     Text end_game;
+    Text pause_game;
+    Text restart_game;
+    Text continue_game;
     base support;
+    Shield shield;
 
     float scrolling;
     int bullet_level;
@@ -59,6 +66,7 @@ private:
     int count_num_exp;
     int time_end_game;
     int menu_number;
+    bool isPause;
 
     std::vector<Chicken*> p_chicken_list_;
 };

@@ -48,6 +48,8 @@
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="shield.cpp" />
+		<Unit filename="shield.h" />
 		<Unit filename="space_ship.cpp" />
 		<Unit filename="space_ship.h" />
 		<Unit filename="text.cpp" />

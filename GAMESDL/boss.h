@@ -28,7 +28,7 @@ public:
     int get_heart() {return heart_;}
 
     void InitBullet(bullet* p_bulet, SDL_Renderer* screen);
-    void MakeBullet(SDL_Renderer* screen);
+    void MakeBullet(SDL_Renderer* screen, bool& isPause);
     void Move();
     void Show(SDL_Renderer* screen);
     void set_clips();

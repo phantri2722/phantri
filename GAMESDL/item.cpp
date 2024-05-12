@@ -33,8 +33,8 @@ SDL_Rect item::GetRectFrame()
 
 int item::random_item()const
 {
-    int rand_item_type = rand()%7;
-    rand_item_type = rand_item_type < 5 ? rand_item_type : 5;
+    int rand_item_type = rand()%8;
+    rand_item_type = rand_item_type < LEVEL_UP ? rand_item_type : 6;
     return rand_item_type;
 }
 
@@ -63,6 +63,10 @@ void item::loadImgItem(SDL_Renderer* screen)
     else if(item_type_ == LEVEL_UP)
     {
         loadImg("image//level_up_1225.png", screen);
+    }
+    else if(item_type_ == SHIELD)
+    {
+        loadImg("image//shield.png", screen);
     }
 }
 

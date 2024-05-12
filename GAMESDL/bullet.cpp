@@ -5,7 +5,7 @@ bullet::bullet()
     x_val_ = 0;
     y_val_ = 0;
     is_move_ = false;
-    bullet_type_ = BLASTER;
+    bullet_type_=BLASTER;
 }
 
 bullet::~bullet() {}
@@ -35,11 +35,13 @@ void bullet::loadImgBullet(SDL_Renderer* screen, int bullet_level)
 
 void bullet::HandleMoveSpaceshipBullet()
 {
+
     rect_.y += y_val_;
     if(rect_.y < -rect_.h)
     {
         is_move_ = false;
     }
+
 }
 
 void bullet::HandleMoveChickenBullet()
@@ -59,3 +61,4 @@ void bullet::HandleMoveBossBullet(const int& x_border, const int& y_border)
         is_move_ = false;
     }
 }
+

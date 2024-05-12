@@ -49,7 +49,7 @@ void Boss::Show(SDL_Renderer* screen)
     SDL_RenderCopy(screen, object_, &clip_[frame_/5], &renderQuad);
 }
 
-void Boss::MakeBullet(SDL_Renderer* screen)
+void Boss::MakeBullet(SDL_Renderer* screen, bool& isPause)
 {
     for(int i=0;i<bullet_list_.size();i++)
     {
@@ -59,7 +59,9 @@ void Boss::MakeBullet(SDL_Renderer* screen)
             if(p_bullet->get_is_move())
             {
                 p_bullet->Render(screen);
+                if(!isPause){
                 p_bullet->HandleMoveBossBullet(SCREEN_WIDTH, SCREEN_HEIGHT + this->rect_.y);
+                }
             }
             else
             {

@@ -10,10 +10,12 @@ space_ship::space_ship()
     x_val_ = 0;
     y_val_ = 0;
 
+    shield_status_ = false;
     status_ = true;
     bullet_damage_ = 0;
     bullet_type_ = BLASTER;
     heart_ = MAIN_HEART;
+
 }
 
 space_ship::~space_ship(){}
@@ -87,7 +89,7 @@ void space_ship::Control(SDL_Event event, SDL_Renderer* screen, int bullet_level
                 {
                     Mix_PlayChannel(-1, bullet_sound[3], 0);
                     p_bullet->set_y_val(-LOVE_BULLET_SPEED);
-                    bullet_damage_ = LOVE_BULLET_DAMAGE;
+                    bullet_damage_ = CHICkEN_HEART;
                 }
 
                 p_bullet->loadImgBullet(screen, bullet_level);
@@ -177,4 +179,20 @@ void space_ship::RemoveBullet(const int& idx)
             }
         }
     }
+}
+
+void space_ship::HandleShield(SDL_Renderer* screen)
+{
+        Shield shield;
+        shield.set_status(shield_status_);
+        //shield.SetRect(rect_.x-(WIDTH_SHIELD-WIDTH_MAIN)/2, rect_.y-(HEIGHT_SHIELD-HEIGHT_MAIN)/2);
+        shield.loadImg("image//fire_circle2.png", screen);
+
+        shield.SetRect(rect_.x-(WIDTH_SHIELD-WIDTH_MAIN)/2, rect_.y-(HEIGHT_SHIELD-HEIGHT_MAIN)/2);
+        shield.set_x_val(x_val_);
+        shield.set_y_val(y_val_);
+        shield.Move();
+        shield.Show(screen);
+        shield.update_shield();
+
 }

@@ -3,6 +3,7 @@
 game::game()
 {
     isRunning = true;
+    isPause = false;
     bullet_level = 0;
     scrolling = -(BACKGROUND_HEIGH - SCREEN_HEIGHT);
     kill = 0;
@@ -68,6 +69,7 @@ void game::init(std::string title)
         }
     }
 
+
     //background and spaceship
     background.loadImg("image//background.png", gRenderer);
     spaceship.loadImg("image//spacecraft.png", gRenderer);
@@ -131,6 +133,9 @@ void game::init(std::string title)
     lighting_text.SetColor(Text::WHITE);
     hint.SetColor(Text::WHITE);
     end_game.SetColor(Text::WHITE);
+    pause_game.SetColor(Text::BLACK);
+    continue_game.SetColor(Text::BLACK);
+    restart_game.SetColor(Text::BLACK);
 
     isRunning = true;
 }
@@ -144,6 +149,35 @@ void game::handle_event()
             isRunning = false;
         }
         spaceship.Control(gEvent, gRenderer, bullet_level, g_sound_bullet, g_sound_level_up);
+
+        int xm = 0;
+        int ym = 0;
+        if(gEvent.type == SDL_MOUSEMOTION)
+        {
+            xm = gEvent.motion.x;
+            ym = gEvent.motion.y;
+            if(check_mouse_item(xm, ym, pause_game.GetRect()))
+            {
+                pause_game.SetColor(Text::WHITE);
+            }
+            else
+            {
+                pause_game.SetColor(Text::BLACK);
+            }
+        }
+        if(gEvent.type == SDL_MOUSEBUTTONDOWN)
+        {
+            xm = gEvent.motion.x;
+            ym = gEvent.motion.y;
+            isPause = true;
+            if(check_mouse_item(xm, ym, continue_game.GetRect())){
+                isPause = false;
+            }
+            if(check_mouse_item(xm, ym, restart_game.GetRect())){
+                menu("START");
+                reset_game();
+            }
+        }
     }
 }
 
@@ -166,17 +200,23 @@ void game::handle_game()
     }
 
     //spaceship
+    if(!isPause){
     spaceship.Move();
+    }
     spaceship.Show(gRenderer);
     spaceship.HandleBullet(gRenderer);
+    spaceship.HandleShield(gRenderer);
 
     //enemies
+
     handle_chicken();
     handle_boss();
 
 
     //item
+    if(!isPause){
     item_.Move(SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
     item_.Show(gRenderer);
 
     bool Col = crash_check(spaceship.GetRect(), item_.get_item_type() < LEVEL_UP ? item_.GetRect() : item_.GetRectFrame());
@@ -192,7 +232,7 @@ void game::handle_game()
         {
             spaceship.set_bullet_type(item_.get_item_type());
         }
-        if(item_.get_item_type() == 4)
+        if(item_.get_item_type() == TROLL)
         {
             Mix_PlayChannel(-1, g_sound_exp[0], 0);
 
@@ -205,8 +245,22 @@ void game::handle_game()
             spaceship.set_status(false);
             spaceship.set_heart(0);
         }
+//        if(item_.get_item_type() == SHIELD)
+//        {
+//            int cnt = 0;
+//            if(cnt<500)
+//            {
+//                cnt++;
+//                spaceship.set_shield_status(true);
+//            }
+//            else if(cnt>=500) {
+//                spaceship.set_shield_status(false);
+//            }
+//        }
+
         item_.set_come_back(false);
     }
+
 
     //explosion
     if(exp.get_frame() < NUMBER_OF_FRAME * 2)
@@ -276,6 +330,16 @@ void game::handle_game()
     lighting_text.SetRect(280, 15);
     lighting_text.loadText_showText(g_font_text, gRenderer);
 
+//    handle_pause_game();
+    pause_game.SetText("PAUSE");
+    pause_game.SetRect(1100,5);
+    pause_game.loadText_showText(g_font_text, gRenderer);
+
+    if(isPause)
+    {
+        handle_pause_game();
+    }
+
     SDL_RenderPresent(gRenderer);
 }
 
@@ -319,9 +383,11 @@ void game::handle_chicken()
             Chicken* p_chicken = p_chicken_list_.at(ck);
             if(p_chicken)
             {
+                if(!isPause){
                 p_chicken->Move();
+                }
                 p_chicken->Show(gRenderer);
-                p_chicken->HandleBullet(gRenderer);
+                p_chicken->HandleBullet(gRenderer, isPause);
             }
 
             bool Col1 = false;
@@ -396,6 +462,8 @@ void game::handle_chicken()
                     }
                 }
             }
+
+
         }
     }
 }
@@ -405,10 +473,11 @@ void game::handle_boss()
     if(kill>=NUMBER_OF_CHICKEN * 2 && boss.get_heart() >= 0)
     {
         boss.show_heart_boss(gRenderer, 420, 20, boss.get_heart(), 6);
-
+        if(!isPause){
         boss.Move();
+        }
         boss.Show(gRenderer);
-        boss.MakeBullet(gRenderer);
+        boss.MakeBullet(gRenderer, isPause);
 
         bool Col1 = false;
         std::vector<bullet*> boss_bullet_list = boss.get_bullet_list();
@@ -483,7 +552,6 @@ void game::menu(const std::string& element)
 {
     base menu;
     base menu2;
-    base plot1;
     if(!menu.loadImg("image//menu.png", gRenderer))
     {
         isRunning = false;
@@ -526,6 +594,7 @@ void game::menu(const std::string& element)
     pos_arr[3].x = 10;
     pos_arr[3]. y = 10;
     text_menu[3].SetRect(pos_arr[3].x, pos_arr[3].y);
+
 
     int xm = 0;
     int ym = 0;
@@ -606,6 +675,7 @@ void game::menu(const std::string& element)
 
 void game::reset_game()
 {
+    isPause = false;
     bullet_level = 0;
     kill = 0;
     count_num_exp = 0;
@@ -650,3 +720,16 @@ void game::reset_game()
         }
     }
 }
+
+void game::handle_pause_game()
+{
+        continue_game.SetText("CONTINUE");
+        continue_game.SetRect(500,300);
+        continue_game.loadText_showText(g_font_text, gRenderer);
+
+        restart_game.SetText("RESTART");
+        restart_game.SetRect(500, 340);
+        restart_game.loadText_showText(g_font_text, gRenderer);
+}
+
+

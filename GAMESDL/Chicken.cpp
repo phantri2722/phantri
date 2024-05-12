@@ -53,7 +53,7 @@ void Chicken::Show(SDL_Renderer* screen)
     }
 }
 
-void Chicken::HandleBullet(SDL_Renderer * screen)
+void Chicken::HandleBullet(SDL_Renderer * screen, bool&isPause)
 {
     for(int i=0;i<bullet_list_.size();i++)
     {
@@ -63,7 +63,9 @@ void Chicken::HandleBullet(SDL_Renderer * screen)
             if(p_bullet->get_is_move())
             {
                 p_bullet->Render(screen);
+                if(!isPause){
                 p_bullet->HandleMoveChickenBullet();
+                }
             }
             else
             {

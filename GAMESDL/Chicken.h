@@ -35,7 +35,7 @@ public:
     SDL_Rect GetRectFrame();
 
     void InitBullet(bullet* p_bullet, SDL_Renderer* screen);
-    void HandleBullet(SDL_Renderer* screen);
+    void HandleBullet(SDL_Renderer* screen, bool& isPause);
     void RemoveBullet(const int& idx);
 
     void Decresae(const float& bullet_damage) {heart_ -= bullet_damage;}
