@@ -4,6 +4,7 @@ game::game()
 {
     isRunning = true;
     isPause = false;
+    isSoundOn = true;
     bullet_level = 0;
     scrolling = -(BACKGROUND_HEIGH - SCREEN_HEIGHT);
     kill = 0;
@@ -50,10 +51,10 @@ void game::init(std::string title)
                 g_font_end_game = TTF_OpenFont("font//font1.ttf", 100);
 
                 //sound
-//                if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-//                {
-//                    isRunning = false;
-//                }
+                if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+                {
+                    isRunning = false;
+                }
                 g_sound_bullet[0] = Mix_LoadWAV("sound//blaster.wav");
                 g_sound_bullet[1] = Mix_LoadWAV("sound//neutron.wav");
                 g_sound_bullet[2] = Mix_LoadWAV("sound//boron.wav");
@@ -148,6 +149,7 @@ void game::init(std::string title)
     pause_game.SetColor(Text::BLACK);
     continue_game.SetColor(Text::BLACK);
     restart_game.SetColor(Text::BLACK);
+    music.SetColor(Text::BLACK);
 
     isRunning = true;
 }
@@ -176,18 +178,70 @@ void game::handle_event()
             {
                 pause_game.SetColor(Text::BLACK);
             }
+            if(check_mouse_item(xm, ym, continue_game.GetRect()))
+            {
+                continue_game.SetColor(Text::WHITE);
+            }
+            else{
+                continue_game.SetColor(Text::BLACK);
+            }
+            if(check_mouse_item(xm, ym, restart_game.GetRect()))
+            {
+                restart_game.SetColor(Text::WHITE);
+            }
+            else{
+                restart_game.SetColor(Text::BLACK);
+            }
+            if(check_mouse_item(xm, ym, music.GetRect())){
+                music.SetColor(Text::WHITE);
+            }
+            else{
+                music.SetColor(Text::BLACK);
+            }
         }
         if(gEvent.type == SDL_MOUSEBUTTONDOWN)
         {
             xm = gEvent.motion.x;
             ym = gEvent.motion.y;
-            isPause = true;
+            if(check_mouse_item(xm, ym, pause_game.GetRect()))
+            {
+                isPause = true;
+            }
             if(check_mouse_item(xm, ym, continue_game.GetRect())){
                 isPause = false;
             }
             if(check_mouse_item(xm, ym, restart_game.GetRect())){
                 menu("START");
                 reset_game();
+            }
+            if(check_mouse_item(xm, ym, music.GetRect()))
+            {
+                if(isSoundOn == true){
+                    isSoundOn = false;
+                    Mix_VolumeChunk(g_sound_bullet[0], 0);
+                    Mix_VolumeChunk(g_sound_bullet[1], 0);
+                    Mix_VolumeChunk(g_sound_bullet[2], 0);
+                    Mix_VolumeChunk(g_sound_bullet[3], 0);
+                    Mix_VolumeChunk(g_sound_chicken_hit[0], 0);
+                    Mix_VolumeChunk(g_sound_chicken_hit[1], 0);
+                    Mix_VolumeChunk(g_sound_chicken_hit[2], 0);
+                    Mix_VolumeChunk(g_sound_exp[0], 0);
+                    Mix_VolumeChunk(g_sound_exp[1], 0);
+                    Mix_VolumeChunk(g_sound_level_up, 0);
+                }
+                else{
+                    isSoundOn = true;
+                    Mix_VolumeChunk(g_sound_bullet[0], 128);
+                    Mix_VolumeChunk(g_sound_bullet[1], 128);
+                    Mix_VolumeChunk(g_sound_bullet[2], 128);
+                    Mix_VolumeChunk(g_sound_bullet[3], 128);
+                    Mix_VolumeChunk(g_sound_chicken_hit[0], 128);
+                    Mix_VolumeChunk(g_sound_chicken_hit[1], 128);
+                    Mix_VolumeChunk(g_sound_chicken_hit[2], 128);
+                    Mix_VolumeChunk(g_sound_exp[0], 128);
+                    Mix_VolumeChunk(g_sound_exp[1], 128);
+                    Mix_VolumeChunk(g_sound_level_up, 128);
+                }
             }
         }
     }
@@ -339,6 +393,10 @@ void game::handle_game()
     {
         handle_pause_game();
     }
+
+    music.SetText("MUSIC");
+    music.SetRect(1100,30);
+    music.loadText_showText(g_font_text, gRenderer);
 
     SDL_RenderPresent(gRenderer);
 }
@@ -503,7 +561,7 @@ void game::handle_boss()
 
             spaceship.SetRect(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
             spaceship.set_status(false);
-            //spaceship.decrease_heart();
+            spaceship.decrease_heart();
             if(spaceship.get_heart() >= 0)
             {
                 bullet_level = bullet_level < 2 ? 0 : (bullet_level - 1);
@@ -593,7 +651,7 @@ void game::handle_boss()
 
             spaceship.SetRect(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
             spaceship.set_status(false);
-            //spaceship.decrease_heart();
+            spaceship.decrease_heart();
             if(spaceship.get_heart() >= 0)
             {
                 bullet_level = bullet_level < 2 ? 0 : (bullet_level - 1);

@@ -58,6 +58,7 @@ private:
     Text pause_game;
     Text restart_game;
     Text continue_game;
+    Text music;
     base support;
     Shield shield;
 
@@ -68,6 +69,7 @@ private:
     int time_end_game;
     int menu_number;
     bool isPause;
+    bool isSoundOn;
 
     std::vector<Chicken*> p_chicken_list_;
 };

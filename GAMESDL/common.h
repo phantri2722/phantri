@@ -45,7 +45,7 @@ const int HEIGHT_BOSS = 117;
 const int BOSS_SPEED = 1;
 const int BOSS_BULLET_SPEED = 13;
 
-const int BOSS2_HEART = 666;
+const int BOSS2_HEART = 400;
 const int WIDTH_BOSS2 = 1200;
 const int HEIGHT_BOSS2 = 230;
 const int BOSS2_SPEED = 1;
