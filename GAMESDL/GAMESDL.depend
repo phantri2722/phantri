@@ -73,7 +73,7 @@
 
 1714009236 d:\demosdl\phantri\gamesdl\properties.hpp
 
-1715260469 source:d:\demosdl\phantri\gamesdl\bullet.cpp
+1715651745 source:d:\demosdl\phantri\gamesdl\bullet.cpp
 	"bullet.h"
 
 1714058367 d:\demosdl\phantri\gamesdl\bullet.hpp
@@ -86,17 +86,17 @@
 	<SDL_image.h>
 	<bits/stdc++.h>
 
-1715223982 source:d:\demosdl\phantri\gamesdl\space_ship.cpp
+1715759548 source:d:\demosdl\phantri\gamesdl\space_ship.cpp
 	"space_ship.h"
 
-1715184451 d:\demosdl\phantri\gamesdl\space_ship.h
+1715745651 d:\demosdl\phantri\gamesdl\space_ship.h
 	<vector>
 	"common.h"
 	"base.h"
 	"bullet.h"
 	"shield.h"
 
-1715163207 d:\demosdl\phantri\gamesdl\common.h
+1715808385 d:\demosdl\phantri\gamesdl\common.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -110,7 +110,7 @@
 1714217383 source:d:\demosdl\phantri\gamesdl\base.cpp
 	"base.h"
 
-1715529817 d:\demosdl\phantri\gamesdl\game.h
+1715568642 d:\demosdl\phantri\gamesdl\game.h
 	"common.h"
 	"base.h"
 	"space_ship.h"
@@ -121,10 +121,10 @@
 	"text.h"
 	"shield.h"
 
-1715533417 source:d:\demosdl\phantri\gamesdl\game.cpp
+1715808385 source:d:\demosdl\phantri\gamesdl\game.cpp
 	"game.h"
 
-1715182264 d:\demosdl\phantri\gamesdl\bullet.h
+1715651478 d:\demosdl\phantri\gamesdl\bullet.h
 	"base.h"
 	"common.h"
 
@@ -132,7 +132,7 @@
 	"common.h"
 	"base.h"
 
-1715531587 source:d:\demosdl\phantri\gamesdl\item.cpp
+1715736799 source:d:\demosdl\phantri\gamesdl\item.cpp
 	"item.h"
 
 1714287759 d:\demosdl\phantri\gamesdl\creep.h
@@ -146,13 +146,14 @@
 1715532362 source:d:\demosdl\phantri\gamesdl\chicken.cpp
 	"Chicken.h"
 
-1715532618 d:\demosdl\phantri\gamesdl\boss.h
+1715737735 d:\demosdl\phantri\gamesdl\boss.h
 	<vector>
 	"common.h"
 	"base.h"
 	"bullet.h"
+	"thunder.h"
 
-1715532618 source:d:\demosdl\phantri\gamesdl\boss.cpp
+1715814471 source:d:\demosdl\phantri\gamesdl\boss.cpp
 	"boss.h"
 
 1714470989 d:\demosdl\phantri\gamesdl\explosion.h
@@ -176,4 +177,12 @@
 
 1715188411 source:d:\demosdl\phantri\gamesdl\shield.cpp
 	"shield.h"
+
+1715657614 d:\demosdl\phantri\gamesdl\thunder.h
+	<vector>
+	"common.h"
+	"base.h"
+
+1715814121 source:d:\demosdl\phantri\gamesdl\thunder.cpp
+	"thunder.h"
 

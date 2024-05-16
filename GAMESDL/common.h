@@ -40,6 +40,15 @@ const int DISTANCE_BETWEEN_CHICKEN = 100;
 const int NUMBER_OF_CHICKEN_PER_ROW = 12;
 
 const int BOSS_HEART = 333;
+const int WIDTH_BOSS = 200;
+const int HEIGHT_BOSS = 117;
+const int BOSS_SPEED = 1;
+const int BOSS_BULLET_SPEED = 13;
+
+const int BOSS2_HEART = 666;
+const int WIDTH_BOSS2 = 1200;
+const int HEIGHT_BOSS2 = 230;
+const int BOSS2_SPEED = 1;
 
 const int ONE_TURN_GIFT = 14;
 

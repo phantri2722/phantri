@@ -34,7 +34,7 @@ SDL_Rect item::GetRectFrame()
 int item::random_item()const
 {
     int rand_item_type = rand()%8;
-    rand_item_type = rand_item_type < LEVEL_UP ? rand_item_type : 6;
+    rand_item_type = rand_item_type < LEVEL_UP ? 3 : 3;
     return rand_item_type;
 }
 

@@ -54,6 +54,8 @@
 		<Unit filename="space_ship.h" />
 		<Unit filename="text.cpp" />
 		<Unit filename="text.h" />
+		<Unit filename="thunder.cpp" />
+		<Unit filename="thunder.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

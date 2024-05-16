@@ -50,10 +50,10 @@ void game::init(std::string title)
                 g_font_end_game = TTF_OpenFont("font//font1.ttf", 100);
 
                 //sound
-                if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-                {
-                    isRunning = false;
-                }
+//                if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+//                {
+//                    isRunning = false;
+//                }
                 g_sound_bullet[0] = Mix_LoadWAV("sound//blaster.wav");
                 g_sound_bullet[1] = Mix_LoadWAV("sound//neutron.wav");
                 g_sound_bullet[2] = Mix_LoadWAV("sound//boron.wav");
@@ -82,7 +82,19 @@ void game::init(std::string title)
     boss.set_x_val(BOSS_SPEED * 3);
     boss.set_heart(BOSS_HEART);
     bullet* p_bullet = new bullet();
-    boss.InitBullet(p_bullet, gRenderer);
+    boss.InitBullet(p_bullet, gRenderer, BOSS_BULLET_SPEED);
+
+    //boss2
+    boss2.loadImg("image//boss2.png", gRenderer);
+    boss2.SetRect(0,-HEIGHT_BOSS2);
+    boss2.set_y_val(BOSS2_SPEED);
+    boss2.set_x_val(0);
+    boss2.set_heart(BOSS2_HEART);
+    bullet* p2_bullet = new bullet();
+    boss2.InitBullet(p2_bullet, gRenderer, BOSS_BULLET_SPEED);
+    Thunder* p_thunder = new Thunder();
+    boss2.InitThunder(p_thunder, gRenderer);
+
 
     //chicken
     int t = 0;
@@ -205,7 +217,7 @@ void game::handle_game()
     }
     spaceship.Show(gRenderer);
     spaceship.HandleBullet(gRenderer);
-    spaceship.HandleShield(gRenderer);
+//    spaceship.HandleShield(gRenderer);
 
     //enemies
 
@@ -245,18 +257,6 @@ void game::handle_game()
             spaceship.set_status(false);
             spaceship.set_heart(0);
         }
-//        if(item_.get_item_type() == SHIELD)
-//        {
-//            int cnt = 0;
-//            if(cnt<500)
-//            {
-//                cnt++;
-//                spaceship.set_shield_status(true);
-//            }
-//            else if(cnt>=500) {
-//                spaceship.set_shield_status(false);
-//            }
-//        }
 
         item_.set_come_back(false);
     }
@@ -302,7 +302,7 @@ void game::handle_game()
     }
 
     //game win
-    if(boss.get_heart() <= 0)
+    if(boss2.get_heart() < 0)
     {
         if(time_end_game < 300)
         {
@@ -470,6 +470,7 @@ void game::handle_chicken()
 
 void game::handle_boss()
 {
+    //boss
     if(kill>=NUMBER_OF_CHICKEN * 2 && boss.get_heart() >= 0)
     {
         boss.show_heart_boss(gRenderer, 420, 20, boss.get_heart(), 6);
@@ -477,7 +478,7 @@ void game::handle_boss()
         boss.Move();
         }
         boss.Show(gRenderer);
-        boss.MakeBullet(gRenderer, isPause);
+        boss.MakeBullet(gRenderer, isPause, WIDTH_BOSS, HEIGHT_BOSS);
 
         bool Col1 = false;
         std::vector<bullet*> boss_bullet_list = boss.get_bullet_list();
@@ -502,7 +503,7 @@ void game::handle_boss()
 
             spaceship.SetRect(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
             spaceship.set_status(false);
-            spaceship.decrease_heart();
+            //spaceship.decrease_heart();
             if(spaceship.get_heart() >= 0)
             {
                 bullet_level = bullet_level < 2 ? 0 : (bullet_level - 1);
@@ -536,6 +537,97 @@ void game::handle_boss()
                 }
             }
         }
+    }
+
+    //boss2
+    if(boss.get_heart()<0 && boss2.get_heart() >= 0)
+    {
+        boss2.Show2(gRenderer);
+        boss2.Move2();
+        if(boss2.GetRect().y >=0) boss2.set_y_val(0);
+        int xVal, yVal;
+        xVal = rand()%2400;
+        yVal = 230;
+//        boss2.MakeBullet(gRenderer, isPause, xVal, yVal);
+        if(boss2.get_heart()>0 && boss2.GetRect().y >= 0)
+        {
+            boss2.MakeBullet(gRenderer, isPause, xVal, yVal);
+            //boss2.MakeThunder(gRenderer, isPause);
+        }
+        bool Col1 = false;
+        std::vector<bullet*> boss_bullet_list = boss2.get_bullet_list();
+        for(int b=0;b< boss_bullet_list.size();b++)
+        {
+            bullet* p2_bullet = boss_bullet_list.at(b);
+            if(p2_bullet)
+            {
+                Col1 = crash_check(p2_bullet->GetRect(), spaceship.GetRect());
+            }
+        }
+
+        bool Col4 = false;
+        std::vector<Thunder*> boss_thunder_list = boss2.get_thunder_list();
+        for(int t =0;t<boss_bullet_list.size();t++)
+        {
+            Thunder* p_thunder = boss_thunder_list.at(t);
+            if(p_thunder)
+            {
+                Col4 = crash_check(p_thunder->GetRectFrame(), spaceship.GetRect());
+            }
+        }
+//        if(Col4)
+//        {
+//            spaceship.set_bullet_damage(spaceship.get_bullet_damage() - 1);
+//            spaceship.set_speed(spaceship.get_speed() - 1);
+//        }
+
+        bool Col2 = crash_check(spaceship.GetRect(), boss2.GetRect());
+        if( Col2 || Col1  )
+        {
+            Mix_PlayChannel(-1, g_sound_exp[0],  0);
+
+            int x_pos = (spaceship.GetRect().x + WIDTH_MAIN / 2) - WIDTH_FRAME_EXP / 2;
+            int y_pos = (spaceship.GetRect().y + HEIGHT_MAIN / 2) - HEIGHT_FRAME_EXP / 2;
+            exp.SetRect(x_pos, y_pos);
+            exp.set_frame(0);
+
+            spaceship.SetRect(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
+            spaceship.set_status(false);
+            //spaceship.decrease_heart();
+            if(spaceship.get_heart() >= 0)
+            {
+                bullet_level = bullet_level < 2 ? 0 : (bullet_level - 1);
+            }
+        }
+
+        std::vector<bullet*> s_bullet_list = spaceship.get_bullet_list();
+        for(int sb = 0;sb<s_bullet_list.size();sb++)
+        {
+            bullet* p_bullet = s_bullet_list.at(sb);
+            if(p_bullet != NULL)
+            {
+                bool Col3 = crash_check(p_bullet->GetRect(), boss2.GetRect());
+                if(Col3)
+                {
+                    boss2.Decrease((spaceship.get_bullet_damage()) + bullet_level * BULLET_DAMAGE_LEVEL_UP);
+                    Mix_PlayChannel(-1, g_sound_chicken_hit[rand()%2], 0);
+                    spaceship.RemoveBullet(sb);
+
+                    if(boss2.get_heart() < 0)
+                    {
+                        kill++;
+
+                        int x_pos = (boss2.GetRect().x + WIDTH_BOSS2 / 2) - WIDTH_FRAME_EXP / 2;
+                        int y_pos = (boss2.GetRect().y + HEIGHT_BOSS2 / 2) - HEIGHT_FRAME_EXP / 2;
+                        exp_boss.SetRect(x_pos, y_pos);
+                        exp_boss.set_frame(0);
+                        boss2.SetRect(0, -HEIGHT_BOSS2);
+                        Mix_PlayChannel(-1, g_sound_exp[0], 0);
+                    }
+                }
+            }
+        }
+
     }
 }
 
@@ -685,8 +777,12 @@ void game::reset_game()
     spaceship.SetRect(SCREEN_WIDTH / 2, SCREEN_HEIGHT - HEIGHT_MAIN);
     spaceship.set_status(true);
     spaceship.set_heart(CHICkEN_HEART);
+    spaceship.set_speed(MAIN_SPEED);
     boss.SetRect(-WIDTH_BOSS, -HEIGHT_BOSS);
     boss.set_heart(BOSS_HEART);
+    boss2.set_heart(BOSS2_HEART);
+    boss2.SetRect(0, -HEIGHT_BOSS2);
+    boss2.set_y_val(BOSS2_SPEED);
     for(int i=0;i<boss.get_bullet_list().size();i++)
     {
         bullet* p_bullet = boss.get_bullet_list().at(i);
@@ -695,6 +791,22 @@ void game::reset_game()
             p_bullet->SetRect(boss.GetRect().x + WIDTH_BOSS / 2, boss.GetRect().y + HEIGHT_BOSS);
         }
     }
+    for(int i=0;i<boss2.get_bullet_list().size();i++)
+    {
+        bullet* p2_bullet = boss2.get_bullet_list().at(i);
+        if(p2_bullet)
+        {
+            p2_bullet->SetRect(boss2.GetRect().x + HEIGHT_BOSS2 / 2, boss2.GetRect().y + HEIGHT_BOSS2);
+        }
+    }
+//    for(int i=0;i<boss2.get_thunder_list().size();i++)
+//    {
+//        Thunder* p_thunder = boss2.get_thunder_list().at(i);
+//        if(p_thunder)
+//        {
+//            p_thunder->SetRect(boss2.GetRect().x + 1200 / 2, boss2.GetRect().y + 230);
+//        }
+//    }
     int t = 0;
     int y_row = -DISTANCE_BETWEEN_CHICKEN;
     for(int c=0;c<NUMBER_OF_CHICKEN;c++)

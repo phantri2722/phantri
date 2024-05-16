@@ -49,7 +49,7 @@ void Boss::Show(SDL_Renderer* screen)
     SDL_RenderCopy(screen, object_, &clip_[frame_/5], &renderQuad);
 }
 
-void Boss::MakeBullet(SDL_Renderer* screen, bool& isPause)
+void Boss::MakeBullet(SDL_Renderer* screen, bool& isPause, const int& width_, const int& height_)
 {
     for(int i=0;i<bullet_list_.size();i++)
     {
@@ -65,14 +65,14 @@ void Boss::MakeBullet(SDL_Renderer* screen, bool& isPause)
             }
             else
             {
-                p_bullet->SetRect(this->rect_.x + WIDTH_BOSS / 2 - p_bullet->GetRect().w / 2, this->rect_.y + HEIGHT_BOSS);
+                p_bullet->SetRect(this->rect_.x + width_ / 2 - p_bullet->GetRect().w / 2, this->rect_.y + height_);
                 p_bullet->set_is_move(true);
             }
         }
     }
 }
 
-void Boss::InitBullet(bullet* p_bullet, SDL_Renderer* screen)
+void Boss::InitBullet(bullet* p_bullet, SDL_Renderer* screen,const int& speed_)
 {
     if(p_bullet != NULL)
     {
@@ -80,7 +80,7 @@ void Boss::InitBullet(bullet* p_bullet, SDL_Renderer* screen)
         {
             p_bullet->set_is_move(true);
             p_bullet->SetRect(this->rect_.x + WIDTH_BOSS / 2 - p_bullet->GetRect().w / 2, this->rect_.y + HEIGHT_BOSS);
-            p_bullet->set_y_val(BOSS_BULLET_SPEED);
+            p_bullet->set_y_val(speed_);
             bullet_list_.push_back(p_bullet);
         }
     }
@@ -129,4 +129,43 @@ void Boss::show_heart_boss(SDL_Renderer* screen, int x, int y, int w, int h)
     SDL_Rect fill_rect = {x,y,w,h};
     SDL_SetRenderDrawColor(screen, 255, 0, 0, 255);
     SDL_RenderFillRect(screen, &fill_rect);
+}
+
+void Boss::Show2(SDL_Renderer* screen)
+{
+    Render(screen);
+}
+
+void Boss::InitThunder(Thunder* p_thunder, SDL_Renderer* screen)
+{
+    if(p_thunder->loadImg("image//thunder2.png", screen))
+    {
+        p_thunder->set_clip();
+        p_thunder->SetRect(rand()%1200, HEIGHT_BOSS2);
+        thunder_list_.push_back(p_thunder);
+    }
+}
+
+void Boss::MakeThunder(SDL_Renderer* screen, bool& isPause)
+{
+    for(int i=0;i<thunder_list_.size();i++)
+    {
+        Thunder* p_thunder = thunder_list_.at(i);
+        if(p_thunder!=NULL)
+        {
+            if(p_thunder->get_isActive())
+            {
+                p_thunder->HandleThunder(screen, isPause);
+            }
+            else{
+                p_thunder->SetRect(WIDTH_BOSS2 / 2 - 213 / 2, 160);
+                p_thunder->set_isActive(true);
+            }
+        }
+    }
+}
+
+void Boss::Move2()
+{
+    rect_.y += y_val_;
 }

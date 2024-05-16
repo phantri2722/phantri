@@ -47,6 +47,7 @@ private:
     space_ship spaceship;
     item item_;
     Boss boss;
+    Boss boss2;
     Explosion exp;
     Explosion exp_boss;
     Text kill_text;

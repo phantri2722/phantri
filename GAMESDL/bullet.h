@@ -23,11 +23,17 @@ public:
     void HandleMoveSpaceshipBullet();
     void HandleMoveChickenBullet();
     void HandleMoveBossBullet(const int& x_border, const int& y_border);
+
+//    void set_thunder_clip();
+//    SDL_Rect GetThunderRect();
+//    void ShowThunder(SDL_Renderer* screen);
 private:
     int x_val_;
     int y_val_;
     bool is_move_;
     int bullet_type_;
+//    SDL_Rect thunder_clip_[5];
+//    int frame_;
 };
 
 #endif

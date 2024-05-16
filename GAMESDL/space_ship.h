@@ -29,10 +29,12 @@ public:
     void set_heart(const int& heart) {heart_ = heart;}
     int get_heart() {return heart_;}
 
-    void set_shield_status(const bool& shield_status) {shield_status_ = shield_status;}
-    bool get_shield_status()const {return shield_status_;}
-    void HandleShield(SDL_Renderer* screen);
+//    void set_shield_status(const bool& shield_status) {shield_status_ = shield_status;}
+//    bool get_shield_status()const {return shield_status_;}
+//    void HandleShield(SDL_Renderer* screen);
 
+    void set_speed(const float& x) {spaceship_speed_ = x;}
+    float get_speed()const {return spaceship_speed_;}
     void Control(SDL_Event event, SDL_Renderer* screen, int bullet_level, Mix_Chunk* bullet_sound[4], Mix_Chunk* g_sound_level_up);
     void Move();
     void Show(SDL_Renderer* screen);
@@ -47,6 +49,7 @@ private:
     std::vector<bullet*> bullet_list_;
     int bullet_type_;
     float bullet_damage_;
+    float spaceship_speed_;
     int heart_;
 
     bool shield_status_;

@@ -5,6 +5,7 @@ bullet::bullet()
     x_val_ = 0;
     y_val_ = 0;
     is_move_ = false;
+    //frame_ = 0;
     bullet_type_=BLASTER;
 }
 
@@ -62,3 +63,34 @@ void bullet::HandleMoveBossBullet(const int& x_border, const int& y_border)
     }
 }
 
+//void bullet::set_thunder_clip()
+//{
+//    for(int i=0;i<5;i++)
+//    {
+//        thunder_clip_[i].x = i* 158;
+//        thunder_clip_[i].y = 0;
+//        thunder_clip_[i].w = 158;
+//        thunder_clip_[i].h = 400;
+//    }
+//}
+//
+//SDL_Rect bullet::GetThunderRect()
+//{
+//    SDL_Rect thunder_rect;
+//    thunder_rect.x = rect_.x;
+//    thunder_rect.y = rect_.y;
+//    thunder_rect.w =rect_.w;
+//    thunder_rect.h = rect_.h;
+//    return thunder_rect;
+//}
+//
+//void bullet::ShowThunder(SDL_Renderer* screen)
+//{
+//    frame_ ++;
+//    if(frame_/10>=5)
+//    {
+//        frame_ = 0;
+//    }
+//    SDL_Rect renderQuad = {rect_.x, rect_.y, 158, 400};
+//    SDL_RenderCopy(screen, object_, &thunder_clip_[frame_/10], &renderQuad);
+//}
