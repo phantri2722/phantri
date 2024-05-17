@@ -90,7 +90,7 @@ void space_ship::Control(SDL_Event event, SDL_Renderer* screen, int bullet_level
                 {
                     Mix_PlayChannel(-1, bullet_sound[3], 0);
                     p_bullet->set_y_val(-LOVE_BULLET_SPEED);
-                    bullet_damage_ = 666;
+                    bullet_damage_ = 3;
                 }
 
                 p_bullet->loadImgBullet(screen, bullet_level);

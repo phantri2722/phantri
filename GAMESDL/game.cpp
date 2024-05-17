@@ -531,7 +531,7 @@ void game::handle_boss()
     //boss
     if(kill>=NUMBER_OF_CHICKEN * 2 && boss.get_heart() >= 0)
     {
-        boss.show_heart_boss(gRenderer, 420, 20, boss.get_heart(), 6);
+        boss.show_heart_boss(gRenderer, 550, 20, boss.get_heart(), 6);
         if(!isPause){
         boss.Move();
         }
@@ -670,6 +670,10 @@ void game::handle_boss()
                     boss2.Decrease((spaceship.get_bullet_damage()) + bullet_level * BULLET_DAMAGE_LEVEL_UP);
                     Mix_PlayChannel(-1, g_sound_chicken_hit[rand()%2], 0);
                     spaceship.RemoveBullet(sb);
+                    int x_pos1 = (boss2.GetRect().x + WIDTH_BOSS2 / 2) - WIDTH_FRAME_EXP / 2;
+                    int y_pos1 = (boss2.GetRect().y + HEIGHT_BOSS2 / 2) - HEIGHT_FRAME_EXP / 2;
+                    exp_boss.SetRect(x_pos1, y_pos1);
+                    exp_boss.set_frame(0);
 
                     if(boss2.get_heart() < 0)
                     {
